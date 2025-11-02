@@ -5,14 +5,19 @@ CLI for running the complete sales intelligence pipeline (all 4 phases).
 Usage:
     python main.py <vendor_domain> <prospect_domain>
 
-Example:
+Examples (all formats accepted):
+    python main.py octavehq.com sendoso.com
     python main.py https://octavehq.com https://sendoso.com
+    python main.py www.octavehq.com www.sendoso.com
+
+All domain formats are automatically normalized to https://
 """
 
 import sys
 import json
 from datetime import datetime
 from agno.workflow import Workflow, Step, Parallel
+from models.workflow_input import WorkflowInput
 
 # Import Phase 1 step executors
 from steps.step1_domain_validation import validate_vendor_domain, validate_prospect_domain
@@ -54,6 +59,7 @@ from steps.step8_playbook_generation import (
 workflow = Workflow(
     name="Octave Clone - Complete Sales Intelligence Pipeline",
     description="End-to-end: Intelligence, vendor extraction, prospect analysis, and actionable playbooks",
+    input_schema=WorkflowInput,  # AgentOS API support with automatic domain normalization
     steps=[
         # Phase 1: Intelligence Gathering (Steps 1-5)
 
@@ -139,8 +145,10 @@ def main():
         print("OCTAVE CLONE MVP - COMPLETE SALES INTELLIGENCE PIPELINE")
         print("=" * 80)
         print("\nUsage: python main.py <vendor_domain> <prospect_domain>")
-        print("\nExample:")
+        print("\nExamples (all formats work):")
+        print("  python main.py octavehq.com sendoso.com")
         print("  python main.py https://octavehq.com https://sendoso.com")
+        print("  python main.py www.octavehq.com www.sendoso.com")
         print("\nThis runs all 4 phases:")
         print("  Phase 1: Intelligence Gathering (Steps 1-5)")
         print("  Phase 2: Vendor GTM Extraction (Step 6)")
@@ -149,8 +157,26 @@ def main():
         print("\n" + "=" * 80)
         sys.exit(1)
 
-    vendor_domain = sys.argv[1]
-    prospect_domain = sys.argv[2]
+    # Normalize domains using Pydantic validation
+    # This accepts flexible inputs: sendoso.com, www.sendoso.com, https://sendoso.com
+    try:
+        validated_input = WorkflowInput(
+            vendor_domain=sys.argv[1],
+            prospect_domain=sys.argv[2]
+        )
+        vendor_domain = validated_input.vendor_domain
+        prospect_domain = validated_input.prospect_domain
+    except Exception as e:
+        print("\n" + "=" * 80)
+        print("❌ INVALID DOMAIN INPUT")
+        print("=" * 80)
+        print(f"\nError: {str(e)}")
+        print("\nPlease provide valid domain names.")
+        print("\nExamples:")
+        print("  python main.py octavehq.com sendoso.com")
+        print("  python main.py https://octavehq.com https://sendoso.com")
+        print("=" * 80)
+        sys.exit(1)
 
     # Display header
     print("\n" + "=" * 80)

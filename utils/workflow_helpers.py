@@ -124,12 +124,61 @@ def extract_validated_urls_or_fail(
     return vendor_data, prospect_data
 
 
+def normalize_domain(domain: str) -> str:
+    """
+    Normalize domain to https:// format, accepting flexible inputs.
+
+    Handles:
+    - sendoso.com → https://sendoso.com
+    - www.sendoso.com → https://sendoso.com
+    - http://sendoso.com → https://sendoso.com
+    - https://sendoso.com → https://sendoso.com (unchanged)
+
+    Args:
+        domain: Domain string in any format
+
+    Returns:
+        Normalized domain with https:// prefix and www. removed
+
+    Raises:
+        ValueError: If domain is invalid or empty
+    """
+    if not domain or not isinstance(domain, str):
+        raise ValueError(f"Invalid domain: {domain}")
+
+    domain = domain.strip()
+
+    # After stripping, check if empty
+    if not domain:
+        raise ValueError(f"Invalid domain: empty or whitespace only")
+
+    # Remove www. prefix if present
+    if domain.startswith('www.'):
+        domain = domain[4:]
+
+    # Add https:// if no protocol specified
+    if not domain.startswith(('http://', 'https://')):
+        domain = f'https://{domain}'
+
+    # Upgrade http:// to https://
+    elif domain.startswith('http://'):
+        domain = domain.replace('http://', 'https://', 1)
+
+    # Additional cleanup: remove www. after protocol if present
+    domain = domain.replace('://www.', '://')
+
+    return domain
+
+
 def validate_single_domain(domain: str, domain_type: str = "domain") -> Tuple[bool, str]:
     """
     Validate a single domain format.
 
+    Note: This function now accepts flexible domain formats and normalizes them.
+    Use normalize_domain() first to handle user inputs like "sendoso.com".
+
     Args:
-        domain: Domain string to validate
+        domain: Domain string to validate (should be normalized first)
         domain_type: Type of domain (for error messages)
 
     Returns:

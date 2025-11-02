@@ -46,7 +46,7 @@ htmlcov/
 *.json
 *.md
 !README.md
-!NEXT_STEPS.md
+!CONTRIBUTING.md
 !docs/**
 !marketing/**
 !artifacts/**

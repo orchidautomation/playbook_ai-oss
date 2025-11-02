@@ -1,0 +1,64 @@
+{
+  "differentiators": [
+    {
+      "category": "feature",
+      "statement": "Octave surfaces the words that actually convert\u2014so your outreach lands with relevance and confidence.",
+      "vs_alternative": null,
+      "evidence": [
+        "Refine ICPs, messaging, and value props in minutes\u2014grounded with real-time insights and positioning best practices."
+      ],
+      "sources": [
+        {
+          "url": "https://www.octavehq.com/features/template",
+          "page_type": "homepage",
+          "excerpt": "Octave surfaces the words that actually convert\u2014so your outreach lands with relevance and confidence. Refine ICPs, messaging, and value props in minutes\u2014grounded with real-time insights and positioning best practices."
+        }
+      ]
+    },
+    {
+      "category": "approach",
+      "statement": "Octave\u2019s AI platform helps streamline messaging beyond what out-of-the-box models like ChatGPT, Claude, or Gemini offer.",
+      "vs_alternative": "ChatGPT, Claude, or Gemini",
+      "evidence": [
+        "Octave is the first AI tool that works the way sales teams need, understanding real personas and pain points, creating effective messaging."
+      ],
+      "sources": [
+        {
+          "url": "https://www.octavehq.com/solutions/gtm-teams",
+          "page_type": "testimonial",
+          "excerpt": "Working with Octave has been a game changer for VELOX. Their AI platform has helped us streamline our messaging well beyond what we\u2019ve seen with out of the box models like ChatGPT, Claude, or Gemini; and easily integrated into our existing stack."
+        }
+      ]
+    },
+    {
+      "category": "feature",
+      "statement": "Octave builds rich, granular, and targeted GTM playbooks quickly, saving significant manual research time.",
+      "vs_alternative": null,
+      "evidence": [
+        "Enables users to create targeted GTM playbooks for key personas, saving 40+ hours of manual work and resources."
+      ],
+      "sources": [
+        {
+          "url": "https://www.octavehq.com/solutions/gtm-teams",
+          "page_type": "testimonial",
+          "excerpt": "Octave has saved me countless weeks of manual research by enabling me to build rich, granular, and targeted GTM playbooks for my key personas. Previously this work would have taken 40+ hours of manual work and a dedicated team of product marketing resources."
+        }
+      ]
+    },
+    {
+      "category": "approach",
+      "statement": "Octave\u2019s support team is available 24/7 and is highly committed to client success, setting them apart from others.",
+      "vs_alternative": null,
+      "evidence": [
+        "Testimonials highlighting the level of commitment and support from Octave's team."
+      ],
+      "sources": [
+        {
+          "url": "https://www.octavehq.com/solutions/gtm-teams",
+          "page_type": "testimonial",
+          "excerpt": "What really sets them apart is the support. Their team has been available 24/7 and has gone above and beyond to ensure our continued success. This level of commitment is rare, and it\u2019s why we\u2019re all in on Octave."
+        }
+      ]
+    }
+  ]
+}

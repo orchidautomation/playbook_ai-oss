@@ -33,6 +33,11 @@ SCRAPE_WAIT_TIME = 2000  # Wait 2 seconds for page load (in milliseconds)
 DEFAULT_SCRAPE_FORMATS = ['markdown', 'html']
 BATCH_SCRAPE_FORMAT = ['markdown']  # Only markdown for batch to save tokens
 
+# Scraping Performance - Use cached data for 500% faster scraping
+SCRAPE_MAX_AGE = 172800000  # 48 hours in milliseconds (2 days)
+                            # Firecrawl will use cached data if available
+                            # Set to 0 to force fresh scrapes
+
 # URL Mapping Configuration
 MAX_URLS_TO_MAP = 5000  # Maximum URLs to discover per domain
 

@@ -1,6 +1,6 @@
 """
 Octave Clone MVP - Main Entry Point
-CLI for running the Phase 1 intelligence gathering workflow.
+CLI for running the complete sales intelligence pipeline (all 4 phases).
 
 Usage:
     python main.py <vendor_domain> <prospect_domain>
@@ -12,20 +12,140 @@ Example:
 import sys
 import json
 from datetime import datetime
-from workflow import phase1_workflow
+from agno.workflow import Workflow, Step, Parallel
+
+# Import Phase 1 step executors
+from steps.step1_domain_validation import validate_vendor_domain, validate_prospect_domain
+from steps.step2_homepage_scraping import scrape_vendor_homepage, scrape_prospect_homepage
+from steps.step3_initial_analysis import analyze_vendor_homepage, analyze_prospect_homepage
+from steps.step4_url_prioritization import prioritize_urls
+from steps.step5_batch_scraping import batch_scrape_selected_pages
+
+# Import Phase 2 step executors (Step 6)
+from steps.step6_vendor_extraction import (
+    extract_offerings,
+    extract_case_studies,
+    extract_proof_points,
+    extract_value_props,
+    extract_customers,
+    extract_use_cases,
+    extract_personas,
+    extract_differentiators
+)
+
+# Import Phase 3 step executors (Step 7)
+from steps.step7_prospect_analysis import (
+    analyze_company_profile,
+    analyze_pain_points,
+    identify_buyer_personas
+)
+
+# Import Phase 4 step executors (Step 8)
+from steps.step8_playbook_generation import (
+    generate_playbook_summary,
+    generate_email_sequences,
+    generate_talk_tracks,
+    generate_battle_cards,
+    assemble_final_playbook
+)
+
+
+# Complete Sales Intelligence Pipeline - All 4 Phases (8 Steps)
+workflow = Workflow(
+    name="Octave Clone - Complete Sales Intelligence Pipeline",
+    description="End-to-end: Intelligence, vendor extraction, prospect analysis, and actionable playbooks",
+    steps=[
+        # Phase 1: Intelligence Gathering (Steps 1-5)
+
+        # Step 1: Parallel domain validation
+        Parallel(
+            Step(name="validate_vendor", executor=validate_vendor_domain),
+            Step(name="validate_prospect", executor=validate_prospect_domain),
+            name="parallel_validation"
+        ),
+
+        # Step 2: Parallel homepage scraping
+        Parallel(
+            Step(name="scrape_vendor_home", executor=scrape_vendor_homepage),
+            Step(name="scrape_prospect_home", executor=scrape_prospect_homepage),
+            name="parallel_homepage_scraping"
+        ),
+
+        # Step 3: Parallel homepage analysis
+        Parallel(
+            Step(name="analyze_vendor_home", executor=analyze_vendor_homepage),
+            Step(name="analyze_prospect_home", executor=analyze_prospect_homepage),
+            name="parallel_homepage_analysis"
+        ),
+
+        # Step 4: URL prioritization
+        Step(name="prioritize_urls", executor=prioritize_urls),
+
+        # Step 5: Batch scraping
+        Step(name="batch_scrape", executor=batch_scrape_selected_pages),
+
+        # Phase 2: Vendor Extraction (Step 6)
+
+        # Step 6: Vendor element extraction (8 parallel specialists)
+        Parallel(
+            Step(name="extract_offerings", executor=extract_offerings),
+            Step(name="extract_case_studies", executor=extract_case_studies),
+            Step(name="extract_proof_points", executor=extract_proof_points),
+            Step(name="extract_value_props", executor=extract_value_props),
+            Step(name="extract_customers", executor=extract_customers),
+            Step(name="extract_use_cases", executor=extract_use_cases),
+            Step(name="extract_personas", executor=extract_personas),
+            Step(name="extract_differentiators", executor=extract_differentiators),
+            name="vendor_element_extraction"
+        ),
+
+        # Phase 3: Prospect Analysis (Step 7)
+
+        # Step 7a: Prospect context analysis (2 parallel analysts)
+        Parallel(
+            Step(name="analyze_company", executor=analyze_company_profile),
+            Step(name="analyze_pain_points", executor=analyze_pain_points),
+            name="prospect_context_analysis"
+        ),
+
+        # Step 7b: Buyer persona identification (uses vendor + prospect data)
+        Step(name="identify_buyer_personas", executor=identify_buyer_personas),
+
+        # Phase 4: Playbook Generation (Step 8)
+
+        # Step 8a: Playbook summary (sequential - needs all Phase 1-3 data)
+        Step(name="generate_playbook_summary", executor=generate_playbook_summary),
+
+        # Step 8b-d: Playbook components (3 parallel specialists)
+        Parallel(
+            Step(name="generate_email_sequences", executor=generate_email_sequences),
+            Step(name="generate_talk_tracks", executor=generate_talk_tracks),
+            Step(name="generate_battle_cards", executor=generate_battle_cards),
+            name="playbook_component_generation"
+        ),
+
+        # Step 8e: Final playbook assembly
+        Step(name="assemble_final_playbook", executor=assemble_final_playbook)
+    ]
+)
 
 
 def main():
-    """Main entry point for Phase 1 workflow."""
+    """Main entry point for complete sales intelligence pipeline."""
 
     # Parse command line arguments
     if len(sys.argv) < 3:
         print("=" * 80)
-        print("OCTAVE CLONE MVP - PHASE 1")
+        print("OCTAVE CLONE MVP - COMPLETE SALES INTELLIGENCE PIPELINE")
         print("=" * 80)
         print("\nUsage: python main.py <vendor_domain> <prospect_domain>")
         print("\nExample:")
         print("  python main.py https://octavehq.com https://sendoso.com")
+        print("\nThis runs all 4 phases:")
+        print("  Phase 1: Intelligence Gathering (Steps 1-5)")
+        print("  Phase 2: Vendor GTM Extraction (Step 6)")
+        print("  Phase 3: Prospect Analysis (Step 7)")
+        print("  Phase 4: Sales Playbook Generation (Step 8)")
         print("\n" + "=" * 80)
         sys.exit(1)
 
@@ -33,13 +153,18 @@ def main():
     prospect_domain = sys.argv[2]
 
     # Display header
-    print("=" * 80)
-    print("OCTAVE CLONE MVP - PHASE 1: INTELLIGENCE GATHERING")
+    print("\n" + "=" * 80)
+    print("OCTAVE CLONE MVP - COMPLETE SALES INTELLIGENCE PIPELINE")
     print("=" * 80)
     print(f"\n📊 Vendor:   {vendor_domain}")
     print(f"🎯 Prospect: {prospect_domain}\n")
     print("=" * 80)
-    print("\n🚀 Starting Phase 1 workflow...\n")
+    print("\n🚀 Starting Complete Workflow (All 4 Phases)...")
+    print("   Phase 1: Intelligence Gathering")
+    print("   Phase 2: Vendor GTM Extraction")
+    print("   Phase 3: Prospect Analysis")
+    print("   Phase 4: Sales Playbook Generation")
+    print("\n" + "=" * 80 + "\n")
 
     # Prepare workflow input
     workflow_input = {
@@ -48,8 +173,12 @@ def main():
     }
 
     try:
-        # Run workflow
-        result = phase1_workflow.run(input=workflow_input)
+        # Run workflow with Agno TUI and streaming
+        print("🔥 Workflow executing with real-time visualization...\n")
+        workflow.print_response(input=workflow_input, stream=True)
+
+        # Also get the result for saving
+        result = workflow.run(input=workflow_input)
 
         # Check if workflow was successful
         if not result or not result.content:
@@ -61,30 +190,53 @@ def main():
 
         # Save results
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        output_filename = f"phase1_output_{timestamp}.json"
+        output_filename = f"complete_output_{timestamp}.json"
 
         with open(output_filename, "w") as f:
             json.dump(result.content, f, indent=2)
 
         # Display success message
         print("\n" + "=" * 80)
-        print("✅ PHASE 1 COMPLETE!")
+        print("✅ COMPLETE WORKFLOW FINISHED!")
         print("=" * 80)
 
         # Print summary
         content = result.content
         print(f"\n📄 Results saved to: {output_filename}\n")
-        print("📊 Summary:")
-        print(f"   • Vendor URLs scraped: {len(content.get('vendor_content', {}))} pages")
-        print(f"   • Prospect URLs scraped: {len(content.get('prospect_content', {}))} pages")
+        print("📊 Pipeline Summary:")
 
-        # Display stats if available
+        # Phase 1 stats
+        print("\n  Phase 1 - Intelligence Gathering:")
+        print(f"    • Vendor URLs scraped: {len(content.get('vendor_content', {}))} pages")
+        print(f"    • Prospect URLs scraped: {len(content.get('prospect_content', {}))} pages")
+
         stats = content.get('stats', {})
         if stats:
-            print(f"   • Vendor content: {stats.get('vendor_chars', 0):,} characters")
-            print(f"   • Prospect content: {stats.get('prospect_chars', 0):,} characters")
+            print(f"    • Vendor content: {stats.get('vendor_chars', 0):,} characters")
+            print(f"    • Prospect content: {stats.get('prospect_chars', 0):,} characters")
+
+        # Phase 2-4 indicators
+        if 'vendor_elements' in content:
+            print("\n  Phase 2 - Vendor GTM Extraction:")
+            print(f"    • Extracted {len(content.get('vendor_elements', {}))} GTM elements")
+
+        if 'buyer_personas' in content:
+            print("\n  Phase 3 - Prospect Analysis:")
+            print(f"    • Identified {len(content.get('buyer_personas', []))} buyer personas")
+
+        if 'sales_playbook' in content:
+            print("\n  Phase 4 - Sales Playbook:")
+            playbook = content.get('sales_playbook', {})
+            if 'battle_cards' in playbook:
+                print(f"    • Battle cards: ✅")
+            if 'email_sequences' in playbook:
+                print(f"    • Email sequences: ✅")
+            if 'talk_tracks' in playbook:
+                print(f"    • Talk tracks: ✅")
 
         print("\n" + "=" * 80)
+        print("🎉 All phases complete! Sales playbook ready.")
+        print("=" * 80 + "\n")
 
     except Exception as e:
         print("\n" + "=" * 80)

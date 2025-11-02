@@ -64,7 +64,12 @@ def scrape_url(url: str, formats: List[str] = None) -> Dict:
         formats = config.DEFAULT_SCRAPE_FORMATS
 
     try:
-        result = fc.scrape(url, formats=formats, wait_for=config.SCRAPE_WAIT_TIME)
+        result = fc.scrape(
+            url,
+            formats=formats,
+            wait_for=config.SCRAPE_WAIT_TIME,
+            max_age=config.SCRAPE_MAX_AGE  # 500% faster with cached data!
+        )
 
         # Firecrawl returns a ScrapeData object with attributes
         metadata = getattr(result, 'metadata', {})
@@ -113,7 +118,8 @@ def batch_scrape_urls(urls: List[str], formats: List[str] = None) -> Dict[str, D
             urls,
             formats=formats,
             poll_interval=config.BATCH_SCRAPE_POLL_INTERVAL,
-            wait_timeout=config.BATCH_SCRAPE_TIMEOUT  # Note: wait_timeout, not timeout!
+            wait_timeout=config.BATCH_SCRAPE_TIMEOUT,  # Note: wait_timeout, not timeout!
+            max_age=config.SCRAPE_MAX_AGE  # 500% faster with cached data!
         )
 
         # Convert to dict keyed by URL

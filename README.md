@@ -47,13 +47,38 @@ An intelligent sales playbook generator that analyzes vendor and prospect websit
 
 ## Usage
 
-### Basic Usage
+### CLI Usage
 
-Run the Phase 1 workflow with vendor and prospect domains:
+Run the complete workflow via command line:
 
 ```bash
 python main.py https://octavehq.com https://sendoso.com
 ```
+
+### API Usage (NEW!)
+
+Serve the workflow as a REST API endpoint using AgentOS:
+
+```bash
+python serve.py
+```
+
+Access the API at:
+- **API Endpoint**: `POST http://localhost:7777/workflows/octave-clone-complete-sales-intelligence-pipeline/runs`
+- **Control Plane UI**: `http://localhost:7777`
+- **OpenAPI Docs**: `http://localhost:7777/docs`
+
+**Example API Call**:
+```bash
+curl -X POST 'http://localhost:7777/workflows/octave-clone-complete-sales-intelligence-pipeline/runs' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "vendor_domain": "octavehq.com",
+    "prospect_domain": "sendoso.com"
+  }'
+```
+
+See [API Serving Guide](docs/API_SERVING_GUIDE.md) for complete API documentation.
 
 ### What Happens
 
@@ -97,7 +122,8 @@ Results are saved to `phase1_output_[timestamp].json` containing:
 octave-clone/
 ├── config.py                    # Configuration and environment variables
 ├── main.py                      # CLI entry point
-├── workflow.py                  # Phase 1 workflow definition
+├── serve.py                     # API server (AgentOS) - NEW!
+├── workflow.py                  # Complete workflow definition (all phases)
 │
 ├── agents/
 │   ├── homepage_analyst.py      # Analyzes homepage content
@@ -108,7 +134,14 @@ octave-clone/
 │   ├── step2_homepage_scraping.py    # Scrapes homepages (parallel)
 │   ├── step3_initial_analysis.py     # AI analysis (parallel)
 │   ├── step4_url_prioritization.py   # Selects URLs (sequential)
-│   └── step5_batch_scraping.py       # Batch scrapes (sequential)
+│   ├── step5_batch_scraping.py       # Batch scrapes (sequential)
+│   ├── step6_vendor_extraction.py    # 8 parallel vendor specialists
+│   ├── step7_prospect_analysis.py    # Prospect analysis (3 agents)
+│   └── step8_playbook_generation.py  # Sales playbook generation
+│
+├── docs/
+│   ├── API_SERVING_GUIDE.md         # API documentation - NEW!
+│   └── AGENTOS_IMPLEMENTATION_GUIDE.md  # AgentOS details - NEW!
 │
 └── utils/
     ├── firecrawl_helpers.py     # Firecrawl SDK wrappers

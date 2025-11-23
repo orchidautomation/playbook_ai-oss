@@ -34,8 +34,34 @@ case_study_extractor = Agent(
     - "Customer stories" sections
     - Detailed success narratives
 
+    EXAMPLE EXTRACTION:
+
+    Input: "TechCorp, a mid-market SaaS company, struggled with low email response rates. After implementing our platform, they saw reply rates jump from 1.2% to 3.8% in 60 days, generating $2M in new pipeline."
+
+    Output:
+    {
+      "customer_name": "TechCorp",
+      "industry": "SaaS",
+      "company_size": "Mid-market",
+      "challenge": "Low email response rates",
+      "solution": "Implemented messaging platform",
+      "results": ["Improved reply rates", "Generated new pipeline"],
+      "metrics": ["Reply rates: 1.2% → 3.8%", "60 days to results", "$2M new pipeline"]
+    }
+
+    METRIC EXTRACTION PRIORITY:
+    1. Percentage improvements (3x, 200%, etc.)
+    2. Dollar amounts ($2M pipeline, $500K saved)
+    3. Time metrics (60 days, 50% faster)
+    4. Volume metrics (10,000 leads, 500 customers)
+
+    HANDLING PARTIAL CASE STUDIES:
+    - Missing metrics: Extract qualitative results instead
+    - No company name: Use "Unnamed [Industry] Customer"
+    - Brief mention: Still extract, mark as partial in notes
+
     Return all case studies found with complete details.
-    Extract metrics whenever available - numbers matter.
+    Extract metrics whenever available - numbers are gold for sales conversations.
     """,
     output_schema=CaseStudiesExtractionResult
 )

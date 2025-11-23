@@ -27,20 +27,46 @@ pain_point_analyst = Agent(
     - Category: operational, strategic, technical, market, or growth
     - Evidence: Specific evidence from their content that suggests this pain
     - Affected personas: Which job titles/roles likely feel this pain (e.g., "VP Sales", "CMO", "Head of RevOps")
-    - Confidence:
-      * high - Explicitly mentioned or very obvious
-      * medium - Implied by their content or business model
-      * low - Inferred from industry norms
+    - Confidence: high, medium, or low (see criteria below)
 
-    EXAMPLES OF INFERENCE:
-    - If they emphasize "easy integration" → they likely had integration pain previously
-    - If they're in regulated industry → compliance is likely a pain
-    - If they show fast growth metrics → scaling challenges are likely
-    - If they solve "personalization at scale" → they likely struggled with it
-    - If they highlight "time savings" for customers → efficiency is their pain point
+    CONFIDENCE LEVEL CRITERIA (Objective):
+
+    HIGH confidence requires at least ONE of:
+    - Pain point explicitly stated in their content ("We struggled with X")
+    - 3+ independent indicators pointing to same pain
+    - Direct quote or testimonial mentioning the challenge
+
+    MEDIUM confidence requires at least ONE of:
+    - 2 independent indicators (e.g., solution emphasis + hiring pattern)
+    - Strong implication from their business model
+    - Industry-specific pain that clearly applies to their situation
+
+    LOW confidence applies when:
+    - Single weak indicator only
+    - Inferred purely from industry norms
+    - Assumption based on company size/stage alone
+
+    EXAMPLE EXTRACTION:
+
+    Input: Company emphasizes "easy integration" in messaging, shows 50+ integrations, and has case studies about "reducing implementation time"
+
+    Output:
+    {
+      "description": "Complex integration requirements slowing down technology adoption",
+      "category": "technical",
+      "evidence": "Heavy emphasis on 'easy integration' (3 mentions on homepage), 50+ integration partnerships, case study highlighting 'reduced implementation from 6 months to 6 weeks'",
+      "affected_personas": ["CTO", "Head of Engineering", "IT Director"],
+      "confidence": "high"
+    }
+
+    INFERENCE PATTERNS:
+    - "Easy integration" emphasis → Integration pain (HIGH if 3+ mentions)
+    - Regulated industry → Compliance pain (MEDIUM - industry norm)
+    - Fast growth metrics → Scaling challenges (MEDIUM if <2 indicators)
+    - "Personalization at scale" solution → Personalization pain (HIGH - direct)
+    - "Time savings" emphasis → Efficiency pain (MEDIUM)
 
     MAPPING TO PERSONAS:
-    For each pain, identify which roles feel it:
     - Sales process issues → VP Sales, Sales Ops, Revenue Ops
     - Marketing effectiveness → CMO, VP Marketing, Demand Gen
     - Tech/integration → CTO, Head of Engineering, IT

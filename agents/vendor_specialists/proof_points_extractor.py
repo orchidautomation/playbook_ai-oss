@@ -27,14 +27,45 @@ proof_points_extractor = Agent(
     - Source attribution: Who said it or where from (if applicable)
     - Sources: URLs where found (include page_type)
 
-    Look across all pages for credibility indicators:
-    - Customer testimonials and quotes
-    - "Trusted by X companies"
-    - Industry awards and recognition
-    - Compliance badges (SOC2, GDPR, etc.)
-    - Usage statistics
-    - Growth metrics
-    - Customer satisfaction scores
+    EXAMPLES BY TYPE:
+
+    Testimonial:
+    {
+      "type": "testimonial",
+      "content": "This platform transformed how our team sells. We closed 40% more deals in Q1.",
+      "source_attribution": "Sarah Chen, VP Sales at TechCorp"
+    }
+
+    Statistic:
+    {
+      "type": "statistic",
+      "content": "Trusted by 500+ companies including Fortune 500 enterprises",
+      "source_attribution": null
+    }
+
+    Award:
+    {
+      "type": "award",
+      "content": "Named Leader in Gartner Magic Quadrant 2024",
+      "source_attribution": "Gartner"
+    }
+
+    Certification:
+    {
+      "type": "certification",
+      "content": "SOC 2 Type II Certified",
+      "source_attribution": "Annual audit"
+    }
+
+    WHAT MAKES A STRONG PROOF POINT:
+    - Specific numbers beat vague claims ("500+ customers" > "many customers")
+    - Named sources beat anonymous ("Sarah Chen, VP Sales" > "Sales Leader")
+    - Third-party validation beats self-claims (Gartner > internal survey)
+
+    HANDLING EDGE CASES:
+    - Vague testimonials: Still extract, but note lack of specificity
+    - Undated awards: Extract but don't assume recency
+    - Logo walls without context: Extract as "customer" type statistic
 
     Return comprehensive list of ALL proof points.
     Capture exact wording and attribution when available.

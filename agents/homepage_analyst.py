@@ -36,6 +36,22 @@ homepage_analyst = Agent(
        - Primary CTA (demo, trial, contact, etc.)
        - Target personas implied by CTAs
 
+    EXAMPLE EXTRACTION:
+
+    Input: "Acme helps sales teams close deals faster with AI-powered insights. Trusted by 500+ companies including Salesforce, HubSpot. Book a demo today."
+
+    Output:
+    - Company: Acme
+    - Value Prop: "Close deals faster with AI-powered insights"
+    - Target: Sales teams
+    - Trust Signals: 500+ companies, Salesforce logo, HubSpot logo
+    - CTA: Book a demo (targets sales leaders)
+
+    HANDLING EDGE CASES:
+    - Minimal content: Extract what's available, note gaps
+    - No clear value prop: Use tagline or hero text as proxy
+    - Missing trust signals: Return empty list, don't fabricate
+
     Return a structured analysis focusing on what this company does and who they serve.
     Keep it concise but comprehensive.
     """,

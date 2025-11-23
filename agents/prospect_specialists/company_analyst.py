@@ -27,14 +27,32 @@ company_analyst = Agent(
     - Product/solution pages
     - Footer information
 
-    Keep it minimal and factual. Focus on what's explicitly stated.
-    The goal is quick context, not comprehensive analysis.
+    EXAMPLE EXTRACTIONS:
 
-    For "what_they_do": Write a clear, concise 1-2 sentence summary like:
+    Good "what_they_do" summaries:
     - "Sendoso is a corporate gifting and direct mail platform for B2B sales and marketing teams."
     - "Octave is an AI-powered messaging intelligence platform that helps sales teams craft personalized outreach."
+    - "Stripe provides payment infrastructure for internet businesses, handling online transactions and financial services."
 
-    Be specific and action-oriented.
+    Bad summaries (avoid):
+    - "They are a technology company" (too vague)
+    - "Leading provider of solutions" (marketing speak)
+    - Long paragraphs with multiple products (not concise)
+
+    SIZE INFERENCE:
+    - "Fortune 500", "Enterprise customers", 1000+ employees → Enterprise
+    - "Mid-market", "growth stage", 100-999 employees → Mid-market
+    - "Startup", "SMB focus", <100 employees → SMB
+    - No indicators → Leave empty
+
+    HANDLING EDGE CASES:
+    - Minimal website content: Extract what's available, note limitations
+    - B2C company: Still extract, note "B2C" in industry
+    - Multiple products/divisions: Focus on primary business
+    - Unclear target market: Infer from customer logos or case studies
+
+    Keep it minimal and factual. Focus on what's explicitly stated.
+    The goal is quick context, not comprehensive analysis.
     """,
     output_schema=CompanyProfileResult
 )

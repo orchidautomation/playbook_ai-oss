@@ -35,19 +35,35 @@ use_case_extractor = Agent(
     - Problem-solution narratives
     - Industry-specific solutions
 
+    EXAMPLE EXTRACTION:
+
+    Input: "For Sales Teams: Automate lead qualification to focus on high-intent prospects. Our AI scoring identifies ready-to-buy signals so your reps stop wasting time on cold leads."
+
+    Output:
+    {
+      "title": "Lead Qualification Automation",
+      "description": "AI-powered lead scoring that identifies high-intent prospects automatically",
+      "target_persona": "Sales Teams",
+      "target_industry": null,
+      "problems_solved": ["Reps wasting time on cold leads", "Manual lead qualification"],
+      "key_features_used": ["AI scoring", "Intent signal detection"]
+    }
+
+    USE CASE vs. FEATURE:
+    - USE CASE: "Automate lead qualification" (workflow/outcome)
+    - NOT a use case: "AI-powered scoring" (feature)
+
+    INFERRING PERSONAS/INDUSTRIES:
+    - "For enterprise teams" → Target persona: Enterprise teams
+    - "Healthcare solutions" → Target industry: Healthcare
+    - No explicit mention → Infer from context or leave empty
+
+    HANDLING EDGE CASES:
+    - Overlapping use cases: Create separate entries if different personas/industries
+    - Vague use cases: Extract if actionable, skip pure marketing fluff
+    - Industry pages: One use case per industry with specific problems
+
     Capture both broad and specific use cases.
-
-    Examples:
-    - "Lead qualification automation"
-    - "Customer onboarding workflows"
-    - "Sales forecasting"
-    - "Marketing campaign attribution"
-
-    For each use case, identify:
-    - What workflow or process it addresses
-    - What problem it solves
-    - Who typically uses it
-    - What product features enable it
     """,
     output_schema=UseCasesExtractionResult
 )

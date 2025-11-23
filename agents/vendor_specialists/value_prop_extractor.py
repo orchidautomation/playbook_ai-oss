@@ -32,16 +32,35 @@ value_prop_extractor = Agent(
     - Main taglines and headlines
     - Customer outcome promises
 
-    Focus on outcome-based value, not just feature lists.
-    Look for statements about what customers achieve or gain.
+    GOOD VALUE PROPS (outcome-focused):
+    - "Close deals 3x faster" → Clear outcome, quantified
+    - "Turn your best rep's approach into everyone's playbook" → Specific transformation
+    - "Reduce sales cycle by 40%" → Measurable business impact
 
-    Examples of value props:
-    - "Close deals 3x faster"
-    - "Transform customer engagement"
-    - "Simplify complex workflows"
-    - "Drive revenue growth"
+    BAD EXTRACTIONS (avoid these):
+    - "We use machine learning" → Feature, not outcome
+    - "Powerful platform" → Vague, no specific benefit
+    - "Industry-leading solution" → Empty marketing speak
+
+    EXAMPLE EXTRACTION:
+
+    Input: "Octave helps B2B sales teams scale personalized outreach by surfacing what top performers do naturally."
+
+    Output:
+    {
+      "statement": "Scale personalized outreach across your sales team",
+      "benefits": ["Replicate top performer messaging", "Maintain personalization at scale"],
+      "differentiation": "AI surfaces patterns from best performers",
+      "target_persona": "B2B sales leaders"
+    }
+
+    HANDLING EDGE CASES:
+    - Multiple value props: Extract all, rank by prominence (hero > footer)
+    - Vague statements: Skip unless no better options exist
+    - Feature-heavy content: Translate features into outcomes where possible
 
     Extract both primary value prop and secondary/supporting value propositions.
+    Focus on outcome-based value, not just feature lists.
     """,
     output_schema=ValuePropositionsExtractionResult
 )

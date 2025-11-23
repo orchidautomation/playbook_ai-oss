@@ -34,17 +34,35 @@ customer_extractor = Agent(
     - Testimonial attributions
     - Customer listings
 
+    EXAMPLE EXTRACTION:
+
+    Input: "Trusted by industry leaders including Salesforce, HubSpot, and fast-growing startups like Notion."
+
+    Output:
+    [
+      {"name": "Salesforce", "company_size": "Enterprise", "relationship": "customer"},
+      {"name": "HubSpot", "company_size": "Enterprise", "relationship": "customer"},
+      {"name": "Notion", "company_size": "Mid-market", "relationship": "customer"}
+    ]
+
+    RELATIONSHIP CLASSIFICATION:
+    - "customer": On logo wall, in case study, gave testimonial, "trusted by" section
+    - "partner": Listed as partner, reseller, agency partner
+    - "integration": On integrations page, "connects with", "works with"
+    - "other": Mentioned but context unclear
+
+    SIZE INFERENCE GUIDELINES:
+    - Fortune 500, "enterprise" mentioned → Enterprise
+    - Well-known tech companies (Salesforce, Google, Microsoft) → Enterprise
+    - "Fast-growing", "startup", Series A-C → SMB or Mid-market
+    - No indicators → Leave empty, don't guess
+
+    HANDLING EDGE CASES:
+    - Logo without name: Skip (can't verify company)
+    - Same company multiple places: Merge, use strongest relationship
+    - Ambiguous relationship: Default to "customer" if on main logo wall
+
     Capture ALL companies mentioned, even if minimal info available.
-
-    For relationship type:
-    - "customer": Paying customer using the product
-    - "partner": Business partner or reseller
-    - "integration": Technology integration partner
-    - "other": Unknown or other relationship
-
-    Extract company size indicators like:
-    - Fortune 500, Enterprise, SMB, Mid-market
-    - Employee count if mentioned
     """,
     output_schema=ReferenceCustomersExtractionResult
 )

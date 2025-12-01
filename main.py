@@ -232,15 +232,6 @@ def main():
         with open(f"{run_dir}/metadata.json", "w") as f:
             json.dump(metadata, f, indent=2)
 
-        # Save Step 5: Batch scraping output
-        try:
-            step5_output = result.get_step_content("batch_scrape")
-            if step5_output:
-                with open(f"{run_dir}/step5_batch_scrape.json", "w") as f:
-                    json.dump(step5_output, f, indent=2)
-        except Exception as e:
-            print(f"Warning: Could not save Step 5 output: {e}")
-
         # Save Step 6: Vendor element extraction (all 8 extractors)
         try:
             step6_outputs = {}
@@ -351,7 +342,6 @@ def main():
         content = result.content
         print(f"\n📁 All outputs saved to: {run_dir}/")
         print(f"   • metadata.json - Run information")
-        print(f"   • step5_batch_scrape.json - Scraped content")
         print(f"   • step6_vendor_extraction.json - Vendor GTM elements")
         print(f"   • step7_prospect_analysis.json - Prospect insights")
         print(f"   • step8_playbook_generation.json - Playbook components")

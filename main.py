@@ -200,12 +200,16 @@ def main():
     }
 
     try:
-        # Run workflow with Agno TUI and streaming
+        # Run workflow with streaming (single execution)
         print("🔥 Workflow executing with real-time visualization...\n")
-        workflow.print_response(input=workflow_input, stream=True)
+        response_stream = workflow.run(input=workflow_input, stream=True)
 
-        # Also get the result for saving
-        result = workflow.run(input=workflow_input)
+        # Process stream events and get final result
+        result = None
+        for event in response_stream:
+            # The stream displays automatically via Agno's TUI
+            # Last event is the final WorkflowRunOutput
+            result = event
 
         # Check if workflow was successful
         if not result or not result.content:

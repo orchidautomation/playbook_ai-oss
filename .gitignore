@@ -42,15 +42,17 @@ venv.bak/
 htmlcov/
 .tox/
 
-# Output files
+# Output files - allow JSON in specific directories only
 *.json
-!README.md
-!CONTRIBUTING.md
-!AGENTOS_SPOTLIGHT_PROPOSAL.md
-!AGENTOS_SPOTLIGHT_ONE_PAGER.md
-!docs/**
-!marketing/**
-!artifacts/**
+!docs/**/*.json
+!artifacts/**/*.json
+!models/**/*.json
+
+# Run outputs (should not be committed)
+output/runs/
+output/run_*/
+complete_output_*.json
+phase*_output_*.json
 
 # Logs
 *.log
@@ -58,3 +60,9 @@ htmlcov/
 # OS
 .DS_Store
 Thumbs.db
+
+# Claude Code local settings
+.claude/settings.local.json
+
+# Marketing files (keep internal)
+marketing/

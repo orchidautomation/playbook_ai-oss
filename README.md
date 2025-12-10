@@ -423,8 +423,31 @@ All normalized to: `https://sendoso.com`
 
 ## License
 
-MIT
+This project is licensed under the **Business Source License 1.1** (BSL 1.1).
+
+### What this means:
+
+- **Free for**: Development, testing, personal use, internal business use
+- **Requires commercial license for**:
+  - Offering this as a service to third parties
+  - Incorporating into commercial products for sale
+  - Reselling or white-labeling
+- **Converts to Apache 2.0**: Four years after each release
+
+### Commercial Licensing
+
+For production commercial use, SaaS offerings, or enterprise deployments, contact:
+
+**Brandon Guerrero**
+Orchid Automation
+Email: brandon@orchidautomation.com
+
+See [LICENSE](LICENSE) for full terms.
 
 ## Support
 
 For issues or questions, please open an issue on GitHub.
+
+---
+
+*Built by [Orchid Automation](https://orchidautomation.com) - GTM Engineering & Sales Intelligence*

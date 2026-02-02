@@ -93,18 +93,14 @@ python serve.py
 
 Then call it:
 ```bash
-curl -X POST 'http://localhost:8080/workflows/playbook-ai-sales-intelligence-pipeline/runs' \
-  -H 'Content-Type: application/json' \
-  -d '{
-    "message": {
-      "vendor_domain": "gong.io",
-      "prospect_domain": "outreach.io"
-    }
-  }'
+curl -X POST 'http://localhost:8080/workflows/playbook-ai---sales-intelligence-pipeline/runs' \
+  --data-urlencode 'message={"vendor_domain":"gong.io","prospect_domain":"outreach.io"}' \
+  --data 'stream=false'
 ```
 
-**Important**: The workflow input must be wrapped in a `message` object. This is required by the Agno AgentOS API format.
+**Note**: The workflow ID uses three hyphens (`---`) and the API uses form-urlencoded data (not JSON).
 
+- Control Plane UI at `http://localhost:8080`
 - Swagger docs at `http://localhost:8080/docs`
 - Health check at `http://localhost:8080/health`
 

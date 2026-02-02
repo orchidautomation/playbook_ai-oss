@@ -12,16 +12,11 @@ API Endpoints:
     GET  /config (AgentOS configuration)
 
 Example API Call:
-    curl -X POST 'http://localhost:8080/workflows/playbook-ai-sales-intelligence-pipeline/runs' \
-      -H 'Content-Type: application/json' \
-      -d '{
-        "message": {
-          "vendor_domain": "gong.io",
-          "prospect_domain": "sendoso.com"
-        }
-      }'
+    curl -X POST 'http://localhost:8080/workflows/playbook-ai---sales-intelligence-pipeline/runs' \
+      --data-urlencode 'message={"vendor_domain":"gong.io","prospect_domain":"sendoso.com"}' \
+      --data 'stream=false'
 
-    Note: The workflow input must be wrapped in a "message" object (Agno AgentOS API format).
+    Note: The workflow ID uses three hyphens (---) and the API uses form-urlencoded data.
 
 Control Plane UI:
     http://localhost:8080

@@ -95,8 +95,15 @@ Then call it:
 ```bash
 curl -X POST 'http://localhost:8080/workflows/playbook-ai-sales-intelligence-pipeline/runs' \
   -H 'Content-Type: application/json' \
-  -d '{"vendor_domain": "gong.io", "prospect_domain": "outreach.io"}'
+  -d '{
+    "message": {
+      "vendor_domain": "gong.io",
+      "prospect_domain": "outreach.io"
+    }
+  }'
 ```
+
+**Important**: The workflow input must be wrapped in a `message` object. This is required by the Agno AgentOS API format.
 
 - Swagger docs at `http://localhost:8080/docs`
 - Health check at `http://localhost:8080/health`

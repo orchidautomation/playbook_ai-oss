@@ -15,9 +15,13 @@ Example API Call:
     curl -X POST 'http://localhost:8080/workflows/playbook-ai-sales-intelligence-pipeline/runs' \
       -H 'Content-Type: application/json' \
       -d '{
-        "vendor_domain": "gong.io",
-        "prospect_domain": "sendoso.com"
+        "message": {
+          "vendor_domain": "gong.io",
+          "prospect_domain": "sendoso.com"
+        }
       }'
+
+    Note: The workflow input must be wrapped in a "message" object (Agno AgentOS API format).
 
 Control Plane UI:
     http://localhost:8080
